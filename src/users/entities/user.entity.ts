@@ -18,7 +18,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column({ nullable: true })
@@ -28,7 +28,7 @@ export class User {
   avatar: string;
 
   @Exclude()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

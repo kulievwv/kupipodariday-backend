@@ -22,6 +22,7 @@ export class WishlistsService {
   async create(createWishlistDto: CreateWishlistDto, userId: number) {
     const wishes = await this.wishRepository.find({
       where: { id: In(createWishlistDto.itemsId) },
+      relations: ['owner', 'offers', 'wishlists'],
     });
     const hasNotOwnWishes = wishes.some((wish) => wish.owner.id !== userId);
     if (hasNotOwnWishes || wishes.length !== createWishlistDto.itemsId.length) {

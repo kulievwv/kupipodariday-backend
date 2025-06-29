@@ -7,7 +7,7 @@ import { CreateUserDto } from '../auth/dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { HashService } from '../hash/hash.service';
 
 @Injectable()
@@ -74,7 +74,10 @@ export class UsersService {
 
   async findUserByEmailOrUsername(query: string) {
     return await this.userRepository.find({
-      where: [{ email: query }, { username: query }],
+      where: [
+        { email: ILike(`%${query}%`) },
+        { username: ILike(`%${query}%`) },
+      ],
     });
   }
 
